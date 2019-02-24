@@ -1,31 +1,48 @@
 const imagenesUrl = "http://192.168.1.54/signos"
 // const imagenesUrl = "https://jsonplaceholder.typicode.com/todos/1"
-
+document.getElementById("fecha").setAttribute("value",getTodayDate())
 function consultar(){
     var fechaInput = document.getElementById("fecha")
     let fecha = fechaInput.value
     console.log(fecha)
     let signo = getSigno(fecha)
     console.log('signo = ',signo)
+    var diasParaCumple = getDiasParaCumple(fecha)
+
     getImagen(signo).then( urlImagen => {
+        let contentDIV = document.getElementById("content")
+        contentDIV.innerHTML = '<button onclick="volver()">Atras</button>'
         console.log('url',urlImagen)
         let imagen = document.createElement ('img')
         imagen.setAttribute('src',urlImagen)
         imagen.setAttribute('class', 'imgSigno')
         
-        let contentDIV = document.getElementById("content")
-        contentDIV.innerHTML = '<button id="btn">Atras</button>'
-        document.getElementById('btn').addEventListener('mouseover', () => {
-            document.getElementById('btn').innerHTML = 'Gonzalo Cardoso'
-        }) 
 
-        document.getElementById('btn').addEventListener("mouseleave", () => {
-            document.getElementById('btn').innerHTML = 'Atras'
-        })
+        let parrafo = document.createElement('p')
+        parrafo.innerHTML = `Faltan ${diasParaCumple} dias para tu proximo cumpleaños`
+        contentDIV.appendChild(parrafo)
+
+
+
 
         contentDIV.appendChild(imagen)
     })
+
 //    let diasParaCumple = getDiasParaCumple(fecha)
+}
+
+function volver() {
+    let contentDIV = document.getElementById("content")
+        contentDIV.innerHTML = `
+        <label>
+        ingrese su fecha de nacimiento:
+        <br>
+        <input type="date"  id="fecha" >
+        </label>
+        <br>
+        <button onclick="consultar()"> consultar </button>
+    ` 
+    document.getElementById("fecha").setAttribute("value",getTodayDate())
 }
 
 function getSigno(fecha){
@@ -101,4 +118,20 @@ function getImagen(signo){
             .then(response => response.json())
             .then(r => r[signo])
         
+}
+
+function getTodayDate(){
+    let today = new Date()
+    let month = today.getMonth()
+    let day = today.getDate()
+    month = parseInt(month)+1
+
+    if(month < 10){
+        month = '0' + month
+    }
+    if(parseInt(day) < 10){
+        day = '0' + day
+    }
+    let str = `${today.getFullYear()}-${month}-${day}` 
+    return str
 }
