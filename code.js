@@ -1,4 +1,4 @@
-const imagenesUrl = "http://192.168.1.54/signos"
+const imagenesUrl = "https://secret-eyrie-21914.herokuapp.com/signos/"
 // const imagenesUrl = "https://jsonplaceholder.typicode.com/todos/1"
 document.getElementById("fecha").setAttribute("value",getTodayDate())
 function consultar(){
