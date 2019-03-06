@@ -101,7 +101,7 @@ function validarFechas(fechaActual,fechaCumple){
     if (fechaActual>=fechaCumple) {
         return fechaCumple
     } else {
-        let yearFuture = (fechaActual.getFullYear())+1
+        let yearFuture = (fechaActual.getFullYear())
         fechaCumple.setFullYear(yearFuture);
         return fechaCumple
     }
